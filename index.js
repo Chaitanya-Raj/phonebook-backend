@@ -41,15 +41,41 @@ app.get("/api/persons", (req, res) => {
 });
 
 app.get("/api/persons/:id", (req, res) => {
-  let id = +req.params.id;
-  let person = persons.find((person) => person.id === id);
+  const id = +req.params.id;
+  const person = persons.find((person) => person.id === id);
 
   if (person) res.json(person);
   else res.status(404).end();
 });
 
+const generateId = () => {
+  const maxId = Math.floor(Math.random() * 1000);
+  console.log(maxId);
+  return maxId;
+};
+
+app.post("/api/persons", (req, res) => {
+  const body = req.body;
+
+  if (!body.name) {
+    return res.status(400).json({
+      error: "content missing",
+    });
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  };
+
+  persons = persons.concat(person);
+
+  res.json(persons);
+});
+
 app.delete("/api/persons/:id", (req, res) => {
-  let id = +req.params.id;
+  const id = +req.params.id;
   persons = persons.filter((person) => person.id !== id);
 
   res.status(204).end();
