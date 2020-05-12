@@ -2,7 +2,15 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
-app.use(morgan("tiny"));
+morgan.token("data", function getData(req) {
+  if (req.method === "POST") return JSON.stringify(req.body);
+  else return "";
+});
+
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms :data")
+);
+
 app.use(express.json());
 
 let persons = [
@@ -50,6 +58,13 @@ app.get("/api/persons/:id", (req, res) => {
   else res.status(404).end();
 });
 
+app.delete("/api/persons/:id", (req, res) => {
+  const id = +req.params.id;
+  persons = persons.filter((person) => person.id !== id);
+
+  res.status(204).end();
+});
+
 const generateId = () => {
   return Math.floor(Math.random() * 1000);
 };
@@ -88,13 +103,6 @@ app.post("/api/persons", (req, res) => {
   persons = persons.concat(person);
 
   res.json(persons);
-});
-
-app.delete("/api/persons/:id", (req, res) => {
-  const id = +req.params.id;
-  persons = persons.filter((person) => person.id !== id);
-
-  res.status(204).end();
 });
 
 const port = 3001;
