@@ -49,9 +49,7 @@ app.get("/api/persons/:id", (req, res) => {
 });
 
 const generateId = () => {
-  const maxId = Math.floor(Math.random() * 1000);
-  console.log(maxId);
-  return maxId;
+  return Math.floor(Math.random() * 1000);
 };
 
 app.post("/api/persons", (req, res) => {
@@ -59,7 +57,23 @@ app.post("/api/persons", (req, res) => {
 
   if (!body.name) {
     return res.status(400).json({
-      error: "content missing",
+      error: "name missing",
+    });
+  }
+
+  if (!body.number) {
+    return res.status(400).json({
+      error: "number missing",
+    });
+  }
+
+  if (
+    persons.find(
+      (person) => person.name.toLowerCase() === body.name.toLowerCase()
+    )
+  ) {
+    return res.status(400).json({
+      error: "name must be unique",
     });
   }
 
