@@ -5,6 +5,8 @@ mongoose.set("useFindAndModify", false);
 
 mongoose.set("useCreateIndex", true);
 
+// mongoose.set("runValidators", true);
+
 const url = process.env.MONGODB_URI;
 
 console.log("connecting to", url);

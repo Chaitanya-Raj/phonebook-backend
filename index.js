@@ -58,7 +58,9 @@ app.put("/api/persons/:id", (req, res, next) => {
     .then((updatedPerson) => {
       res.json(updatedPerson.toJSON());
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 });
 
 app.delete("/api/persons/:id", (req, res) => {
