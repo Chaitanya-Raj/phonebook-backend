@@ -27,7 +27,7 @@ app.get("/info", (req, res) => {
   });
 });
 
-app.get("/api/persons", (req, res) => {
+app.get("/api/persons", (req, res, next) => {
   Person.find({})
     .then((persons) => {
       res.json(persons);
@@ -63,17 +63,13 @@ app.put("/api/persons/:id", (req, res, next) => {
     });
 });
 
-app.delete("/api/persons/:id", (req, res) => {
+app.delete("/api/persons/:id", (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-    .then((result) => {
+    .then(() => {
       res.status(204).end();
     })
     .catch((error) => next(error));
 });
-
-const generateId = () => {
-  return Math.floor(Math.random() * 1000);
-};
 
 app.post("/api/persons", (req, res, next) => {
   const body = req.body;
@@ -116,7 +112,7 @@ const errorHandler = (error, req, res, next) => {
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
