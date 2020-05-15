@@ -10,7 +10,8 @@
     "build:ui": "rm -rf build && cd ../fullstackopen-exercises/part2/phonebook && yarn run build --prod && cp -r build ../../../phonebook-backend/",
     "deploy": "git push heroku master",
     "deploy:full": "yarn run build:ui && git add . && git commit -m uibuild && yarn run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -21,6 +22,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^7.0.0",
     "nodemon": "^2.0.3"
   }
 }

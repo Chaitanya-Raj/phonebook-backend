@@ -11,7 +11,7 @@ morgan.token("data", function getData(req) {
 });
 
 app.use(
-  morgan(":method :url :status :res[content-length] - :response-time ms :data")
+  morgan(":method :url :status :res[content-length] - :response-time ms :data"),
 );
 app.use(cors());
 app.use(express.json());
@@ -20,9 +20,7 @@ app.use(express.static("build"));
 app.get("/info", (req, res) => {
   Person.find({}).then((persons) => {
     res.send(
-      `<p>Phonebook has info for ${
-      persons.length
-      } people</p><p>${new Date()}</p>`
+      `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`,
     );
   });
 });
