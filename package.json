@@ -7,9 +7,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:ui": "rm -rf build && cd ../fullstackopen-exercises/part2/phonebook && yarn run build --prod && cp -r build ../../../phonebook-backend/",
+    "build:ui": "rm -rf build && cd ../fullstackopen-exercises/part2/phonebook && npm run build --prod && cp -r build ../../../phonebook-backend/",
     "deploy": "git push heroku master",
-    "deploy:full": "yarn run build:ui && git add . && git commit -m uibuild && yarn run deploy",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail",
     "lint": "eslint ."
   },
